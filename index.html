@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+<meta charset="utf-8">
+<meta name="description" content="Language Motion Primitives: Grounding Language Models in Robot Movement">
+<meta name="keywords" content="Imitation Learning">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Language Motion Primitives: Grounding Language Models in Robot Movement</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+  <link rel="icon" href="./favicon.ico?">
+  
+  <meta lmperty="og:site_name" content="Language Motion Primitives: Grounding Language Models in Robot Movement" />
+  <meta lmperty="og:type" content="video.other" />
+  <meta lmperty="og:title" content="Language Motion Primitives: Grounding Language Models in Robot Movement" />
+  <meta lmperty="og:url" content="" />
+  <meta lmperty="og:image" content="" />
+  <meta lmperty="og:image:secure" content="" />
+  <meta lmperty="og:video" content="" />
+  <meta lmperty="og:video:secure" content="" />
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Language Motion Primitives: Grounding Language Models in Robot Movement</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="">Anonymous Authors</a></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Institution</span>
+            <br>
+            <span class="brmod">Under Review</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./static/resources/lmp.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/embed/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/lmp-26/lmp-26.github.io/tree/code"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <!-- Abstract. -->
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Enabling robots to perform novel manipulation tasks from natural language
+instructions remains a fundamental challenge in robotics, despite significant
+progress in generalized problem solving with foundational models. Large vision
+and language models (VLMs) are capable of processing high-dimensional input
+data for visual scene and language understanding, as well as decomposing tasks
+into a sequence of logical steps; however, they struggle to ground those steps
+in embodied robot motion. On the other hand, robotics foundation models output
+action commands, but require in-domain fine-tuning or experience before they
+are able to perform novel tasks successfully. At its core, there still remains
+the fundamental challenge of connecting abstract task reasoning with low-level
+motion control. To address this disconnect, we propose Language Motion
+Primitives (LMPs), a framework that grounds VLM reasoning in Dynamic Movement
+Primitive (DMP) parameterization. Our key insight is that DMPs provide a small
+number of interpretable parameters, and VLMs can set these parameters to
+specify diverse, continuous, and stable trajectories. Put another way: VLMs can
+reason over free-form natural language task descriptions, and semantically
+ground their desired motions into DMPs — bridging the gap between high-level
+task reasoning and low-level position and velocity control. Building on this
+combination of VLMs and DMPs, we formulate our LMP pipeline for zero-shot robot
+manipulation that effectively completes tabletop manipulation problems by
+generating a sequence of DMP motions. Across 20 real-world manipulation tasks,
+we show that LMP achieves 80% task success as compared to 31% for the
+best-performing baseline.
+           </p>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="columns is-centered">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2" style="text-align: center;">lmp: Overview</h2>
+      <tr>
+        <td>
+          <br>
+          <div class="columns is-centered has-text-centered">
+            <img src="./static/resources/method.png" style="width: 75%;"></img>
+          </div>
+        </td>
+      </tr>
+      <br>
+      <br>
+      <div class="is-vcentered interpolation-panel">
+        <div class="content has-text-justified">
+          <p style = "font-size: 18px">
+		  We propose LMP...
+          </p>
+        </div>
+      </div>
+  </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+      href="./static/resources/lmp.pdf">
+     <i class="fas fa-file-pdf"></i>
+   </a>
+   <a class="icon-link" href="https://github.com/lmp-26/lmp-26.github.io/tree/code" class="external-link" disabled>
+     <i class="fab fa-github"></i>
+   </a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
