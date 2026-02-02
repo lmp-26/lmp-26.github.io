@@ -55,12 +55,40 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">Language Movement Primitives: Grounding Language Models in Robot Motion</h1>
+          
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><a href="">Anonymous Authors</a></span>
+            <!-- <span class="author-block"></sup>Anonymous</span> -->
+              <style>
+              .author-block a {color: rgb(255, 153, 0) !important; text-decoration: none;font-weight: 500;}
+              .author-block a:hover {color: rgb(255, 120, 0) !important; text-decoration: underline;}
+              .author-block {
+                white-space: nowrap; /* prevent breaking mid-name */
+              }
+
+              .author-block a,
+              .author-block span {
+                white-space: nowrap; /* each name stays together */
+              }
+
+              .author-block br {
+                display: none; /* ensure <br> doesn’t interfere */
+              }
+
+              .author-block .comma::after {
+                content: ", ";
+                white-space: normal; /* allow break after comma */
+              }
+              </style>
+            <span class="author-block"></sup>
+              <a href="https://yinlongdai.github.io/" target="_blank">Yinlong Dai</a><span class="comma"></span>
+              <a href="https://github.com/benjaminchristie" target="_blank">Benjamin A. Christie</a><span class="comma"></span>
+              <a href="https://linkedin.com/in/daniel-evans-787b7a293" target="_blank">Daniel J. Evans</a><span class="comma"></span>
+              <a href="https://dylanlosey.com/" target="_blank">Dylan P. Losey</a><span class="comma"></span>
+              <a href="https://simonstepputtis.com/" target="_blank">Simon Stepputtis</a><span class="comma"></span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block">Anonymous Institution</span>
+            <span class="author-block">Virginia Tech</span>
             <br>
             <span class="brmod">Under Review</span>
           </div>
