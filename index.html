@@ -28,11 +28,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
+</script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <!-- MathJax for rendering LaTeX math (e.g., $\pi_D$) -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
 
@@ -161,18 +170,18 @@ in embodied robot motion. On the other hand, robotics foundation models output
 action commands, but require in-domain fine-tuning or experience before they
 are able to perform novel tasks successfully. At its core, there still remains
 the fundamental challenge of connecting abstract task reasoning with low-level
-motion control. To address this disconnect, we propose Language Motion
-Primitives (LMPs), a framework that grounds VLM reasoning in Dynamic Movement
+motion control. To address this disconnect, we propose <b style="color:#FF9900;">Language Movement
+Primitives (LMPs)</b>, a framework that grounds VLM reasoning in Dynamic Movement
 Primitive (DMP) parameterization. Our key insight is that DMPs provide a small
 number of interpretable parameters, and VLMs can set these parameters to
 specify diverse, continuous, and stable trajectories. Put another way: VLMs can
 reason over free-form natural language task descriptions, and semantically
 ground their desired motions into DMPs — bridging the gap between high-level
 task reasoning and low-level position and velocity control. Building on this
-combination of VLMs and DMPs, we formulate our LMP pipeline for zero-shot robot
+combination of VLMs and DMPs, we formulate our <b style="color:#FF9900;">LMP</b> pipeline for zero-shot robot
 manipulation that effectively completes tabletop manipulation problems by
 generating a sequence of DMP motions. Across 20 real-world manipulation tasks,
-we show that LMP achieves 80% task success as compared to 31% for the
+we show that <b style="color:#FF9900;">LMP</b> achieves 80% task success as compared to 31% for the
 best-performing baseline.
            </p>
           </div>
@@ -185,12 +194,12 @@ best-performing baseline.
 <section class="section">
   <div class="columns is-centered">
     <div class="container is-max-desktop">
-      <h2 class="title is-2" style="text-align: center;">lmp: Overview</h2>
+      <h2 class="title is-2" style="text-align: center;">Overview</h2>
       <tr>
         <td>
           <br>
           <div class="columns is-centered has-text-centered">
-            <img src="./static/resources/method.png" style="width: 75%;"></img>
+            <img src="./static/resources/method.png" style="width: 100%;"></img>
           </div>
         </td>
       </tr>
@@ -198,9 +207,12 @@ best-performing baseline.
       <br>
       <div class="is-vcentered interpolation-panel">
         <div class="content has-text-justified">
-          <p style = "font-size: 18px">
-		  We propose LMP...
-          </p>
+<!-- <p style="font-size: 18px">
+  We propose LMP, a combination of VLMs and DMPs. The VLM serves as the high-level policy: this model takes in segmented state observations, breaks the task down into steps, and decides on the next subtask.
+</p> -->
+<p style="font-size: 18px">
+  <b style="color:#FF9900;">LMP</b> pipeline for a single subtask rollout. $(a)$ The robot begins with a user-provided task description. The robot then collects an image capturing the current environment state, and remembers any previously performed subtask(s). $(b)$ The decomposer $\pi_D$ identifies scene objects and outputs a subtask for the next DMP to complete. An open-vocabulary classifier and depth sensing are used to estimate 3D object locations. The scene description and proposed subtask are then forwarded to the DMP weight generator $\pi_G$. $(c)$ The generator predicts DMP weights and auxiliary parameters to define the low-level reference trajectory. $(d)$ The robot tracks the continuous trajectory generated from the predicted DMP parameters. Optionally, the user may observe the robot and provide natural-language feedback about any mistakes. If the user gives this refinement $r$, then the robot resets the rollout and the process repeats from $(b)$.
+</p>
         </div>
       </div>
   </div>
