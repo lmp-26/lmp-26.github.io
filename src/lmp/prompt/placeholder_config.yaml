@@ -1,0 +1,12 @@
+dimensions: 6
+num_functions: 10
+goal_obj_name: "target object"
+task: "task description"
+robot_base_position: "[0.0, 0.0, 0.0]"
+robot_base_orientation: "[0.0, 0.0, 0.0]"
+initial_tcp_position: "[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"
+initial_tcp_velocities: "[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]"
+movable_objects: |
+  | name | position |
+  |------|-------|
+  | placeholder_obj | 0.5, 0.5, 0.5 |

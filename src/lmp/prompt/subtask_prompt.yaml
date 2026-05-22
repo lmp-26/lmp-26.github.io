@@ -1,0 +1,33 @@
+PROMPT: |
+  The overall goal is "OVERALL_TASK". 
+  The agent in the video is currently performing one subtask out of many to complete this instruction. 
+
+  In the environment, the available <OBJECT> are:
+  OBJ_LIST
+
+  So far, the agent has completed the following subtasks:
+  PRIOR_TASKS
+
+  For the agent in the video, what is the most plausible next immediate subtask?
+  Also identify whether any obstacles lie along the execution path of this subtask.
+  When obstacles are present, generate a collision avoidance plan that enables successful task completion.
+
+  Collision avoidance plan template:
+  Potential collision with <OBSTACLE>, avoid by <DEVIATION_STRATEGY>.
+
+  Rules (must follow strictly):
+      - Prefer multi-dimensional deviations, e.g., combining at least two of: lifting upward, or shifting forward, shifting left, shifting right or otherwise.
+      - Deviation must be local and temporary, defined only in the gripper frame.
+  	- Do not reference the task goal, target object, or intended path, deviation must be goal-agnostic.
+  	- Choose the primary horizontal deviation orthogonal to the obstacle position:
+  	- Obstacle on left/right → deviate left/right.
+  	- Obstacle in front/back → deviate forward/backward.
+
+
+  Choose from the following options, and instantiate with the correct object if needed:
+  - REACH(<OBJECT>)
+  - CARRY(<OBJECT>) to (<OBJECT>), <collision avoidance plan> (if needed)
+  - WIPING (<OBJECT>)
+  - RELEASE (<OBJECT>)
+  - PUSH (<OBJECT>) to (<OBJECT>)
+  "None" output is prohibited!

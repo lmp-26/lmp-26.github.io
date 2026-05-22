@@ -1,0 +1,65 @@
+PROMPT: |
+  The overall goal of the robot is to: $$$$$
+  The agent in the video just finished performing one subtask out of many to complete this instruction. Particularly, the robot just finished attempting the subtask "#####".
+
+  IMPORTANT: The video shows the COMPLETE attempt at this subtask. If the robot appears to stop before reaching the target, or if the motion seems incomplete, this means the robot FAILED to complete the subtask—not that the video was cut short.
+
+  CRITICAL: A subtask is successful ONLY IF all of the following are true:
+  - The robot COMPLETED the intended action (e.g., actually grasped the object, actually placed it on the target)
+  - The robot made NO collisions or disturbances to other objects in the environment
+  - The gripper operated at the CORRECT time and position
+
+  If ANY of these conditions are violated, the subtask FAILED.
+
+  ANALYSIS PROCESS - FOLLOW THIS ORDER:
+  Watch the video from START to END and identify failures IN CHRONOLOGICAL ORDER. The FIRST failure that occurs is the PRIMARY failure, even if other issues happen later.
+
+  Step 1 - SCAN FOR COLLISIONS FIRST (watch the entire trajectory):
+  - Before analyzing anything else, watch the complete motion from start to finish
+  - Did the robot arm, gripper, or held object contact ANY other object in the environment at ANY point?
+  - Did any object in the scene move, tip, fall, or get displaced that wasn't supposed to?
+  - If a collision or disturbance occurred, note WHEN in the trajectory it happened
+
+  Step 2 - CHECK GRIPPER TIMING AND POSITION:
+  - Track the gripper state (open/closed) throughout the video
+  - For grasping: The gripper must close ONLY when positioned around the object
+  - For releasing: The gripper must open ONLY when over the target
+  - At the moment of gripper actuation, was it in the correct position?
+
+  Step 3 - CHECK TASK COMPLETION:
+  - Did the robot complete the intended action?
+  - For grasping: Is the object secured in the gripper?
+  - For placing: Did the object reach the target location?
+
+  CRITICAL RULE FOR IDENTIFYING THE PRIMARY FAILURE:
+  - The PRIMARY failure is the FIRST thing that went wrong chronologically
+  - A collision that happens mid-trajectory is the primary failure even if placement also had issues
+  - Do NOT skip past early failures to focus on the final outcome
+  - Example: If the robot knocks over a bottle during transport, then places the block imprecisely, the collision is the PRIMARY failure because it happened first
+
+  FAILURE EXAMPLES BY PRIORITY:
+  - Robot knocks over bottle while carrying block → PRIMARY FAILURE is the collision (not placement quality)
+  - Gripper closes before reaching object → PRIMARY FAILURE is premature gripper closure
+  - Robot reaches object but gripper never closes → PRIMARY FAILURE is missing gripper actuation
+  - Block placed slightly off-center on plate (with no other issues) → PRIMARY FAILURE is placement precision
+
+  CORRECTION FORMAT:
+  Corrections must include BOTH:
+  1. A DIRECTIONAL component: the spatial adjustment needed (e.g., higher, lower, more to the left/right, wider arc, closer to object)
+  2. A TEMPORAL component: WHEN in the trajectory this adjustment should occur (e.g., "during transport", "when passing the bottle", "at the moment of grasping", "during descent")
+
+  Good correction examples:
+  - "Move higher during the carrying phase to avoid contacting the bottle"
+  - "Arc further to the left when transporting the block to maintain clearance from obstacles"
+  - "Descend lower before closing the gripper so the fingers are positioned around the banana"
+
+  Bad correction examples (too vague):
+  - "Be more careful"
+  - "Improve placement accuracy"
+  - "Avoid obstacles"
+
+  Respond with:
+  1. A description of the first and primary failure observed inside <description> </description>
+  2. A specific, actionable correction for the next attempt inside <correction> </correction>
+
+  REMEMBER: Identify the FIRST failure chronologically. Do not skip collisions or mid-trajectory errors to focus on the final action.
