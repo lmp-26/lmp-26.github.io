@@ -84,14 +84,14 @@ To run the TrajGen baseline, you can skipping the LLM DMP Generator and standard
    uv run src/trajgen_baseline/main.py
    ```
 
-### Pi0 [[repo](https://github.com/Physical-Intelligence/openpi)]
+### Pi0.5 [[repo](https://github.com/Physical-Intelligence/openpi)]
 **Train:**
 Clone the repo, first build datasets and set training configurations according to `src/pi0_baseline/training_config.py`, then compute the normalization statistics.
 Setup training script based on `src/pi0_baseline/train.sh`.
 
 
 **Test:**
-To run the Pi0 baseline, you need to run the camera publisher and the deployment script:
+To run the Pi0.5 baseline, you need to run the camera publisher and the deployment script:
 
 1. **Terminal 1: Graphical User Interface**: `uv run src/gui.py`
 2. **Terminal 2: Robot Controller**: `uv run src/controller.py`
@@ -100,7 +100,7 @@ To run the Pi0 baseline, you need to run the camera publisher and the deployment
    uv run src/pi0_baseline/cameras_publisher.py
    ```
 4. **Terminal 4: Policy Server (Can be remotely)**: `uv run scripts/serve_policy.py policy:checkpoint --policy.config=LMP --policy.dir=checkpoints/LMP/my_experiment/20000` 
-5. **Terminal 5: Pi0 Baseline**:
+5. **Terminal 5: Deploy Pi0.5**:
    ```bash
    uv run src/pi0_baseline/deploy.py
    ```
