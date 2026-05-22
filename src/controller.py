@@ -16,7 +16,6 @@ from scipy.spatial.transform import Rotation as R
 
 from utils import Franka
 from utils import Keyboard
-# from scipy.spatial.transform.Rotation import as_quat, as_euler
 
 as_quat = R.as_quat
 as_euler = R.as_euler
@@ -371,27 +370,6 @@ async def run_dmp(request: RunDMPRequest):
     else:
         # we had to cancel during the dmp
         return DMPResponse(status="DMP failed for some reason", success=False, reason="interrupted")
-
-@app.post("/run-dmp_quat", response_model=DMPResponse)
-async def run_dmp_quat(request: RunDMPRequest):
-    global interface, robot, conn_robot, conn_gripper, gripper_opeen, last_start_pose
-
-    last_start_pose = robot.readState(conn_robot)["q"].copy()
-
-    # Use gaussian for first 7 DoFs, step function for gripper (last DOF)
-    dmps = [DMP(basis_type='gaussian') for _ in range(7)] # + [DMP(basis_type='step')]
-    dmps.append(DMP(basis_type='step', dmp_type='gripper'))  # last DOF is gripper with step basis
-    state = robot.readState(conn_robot)
-    start_xyz = state["x"][:3]
-    start_angle = R.from_euler('xyz', state["angle"])
-    start_quat = start_angle.as_quat()  
-    start_state = np.array(start_xyz.tolist() + start_quat.tolist() + [1 - (gripper_open == True)])
-
-    # import values for dmps here
-    goal_state = np.array(request.goal)
-    # get yaw
-    goal_quat = R.from_euler('xyz', [0.0, 0.0, goal_state[-2]]).as_quat()
-
 
 @app.post("/simulate_dmp")
 async def simulate_dmp(request: RunDMPRequest):
