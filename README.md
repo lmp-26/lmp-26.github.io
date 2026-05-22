@@ -9,9 +9,9 @@ Implementation of Language Movement Primitives (LMP), a framework that grounds V
 ## Setup Instructions
 
 ### 1 Installation
-Clone the repository with submodules and sync the dependencies:
+Clone the repository (specifically the `code` branch) with submodules and sync the dependencies:
 ```bash
-git clone https://github.com/lmp-26/lmp-26.github.io.git
+git clone -b code https://github.com/lmp-26/lmp-26.github.io.git LMP
 cd LMP
 git submodule update --init --recursive
 
