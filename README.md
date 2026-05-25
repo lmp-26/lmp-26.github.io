@@ -1,8 +1,12 @@
-# Language Movement Primitives: Grounding Language Models in Robot Motion
+<h1 align="center" style="font-size: 2.0em; font-weight: bold; margin-bottom: 0; border: none; border-bottom: none;">Language Movement Primitives: Grounding Language Models in Robot Motion</h1>
 
-[[arXiv](https://arxiv.org/pdf/2602.02839)] [[Project Website](https://collab.me.vt.edu/lmp/)]
+#####
+<div align="center">
+    <a href="https://collab.me.vt.edu/lmp/"><img src="https://img.shields.io/static/v1?label=Project%20Page&message=Website&color=blue"></a> &ensp;
+    <a href="https://arxiv.org/abs/2602.02839"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv&color=red"></a> &ensp; 
+</div>
 
-Implementation of Language Movement Primitives (LMP), a framework that grounds VLM reasoning in Dynamic Movement Primitive (DMP) parameterization. 
+> Implementation of Language Movement Primitives (LMP), a framework that grounds VLM reasoning in Dynamic Movement Primitive (DMP) parameterization. 
 
 ![LMP Dashboard](figure/interface.png)
 
@@ -34,7 +38,7 @@ cp src/.sample_env src/.env
 
 ## Running the System
 
-To run the full LMP system, you need to open **5 separate terminals** and run the following commands in order:
+Our implementation uses FastAPI to handle requests and coordinate communication between modules. To run the full LMP system, you need to open **5 separate terminals** and run the following commands in order:
 
 ### Terminal 1: Graphical User Interface
 The dashboard interface for monitoring and task execution with WebGUI.
