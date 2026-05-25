@@ -103,7 +103,7 @@ To run the Pi0.5 baseline, you need to run the camera publisher and the deployme
    ```bash
    uv run src/pi0_baseline/cameras_publisher.py
    ```
-4. **Terminal 4: Policy Server (Can be remotely)**: `uv run scripts/serve_policy.py policy:checkpoint --policy.config=LMP --policy.dir=checkpoints/LMP/my_experiment/20000` 
+4. **Terminal 4: Policy Server (under `openpi` directory, can be remotely)**: `uv run scripts/serve_policy.py policy:checkpoint --policy.config=LMP --policy.dir=checkpoints/LMP/my_experiment/20000` 
 5. **Terminal 5: Deploy Pi0.5**:
    ```bash
    uv run src/pi0_baseline/deploy.py
