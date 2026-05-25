@@ -90,7 +90,7 @@ To run the TrajGen baseline, you can skipping the LLM DMP Generator and standard
 
 ### Pi0.5 [[repo](https://github.com/Physical-Intelligence/openpi)]
 **Train:**
-Clone the repo, first build datasets and set training configurations according to `src/pi0_baseline/training_config.py`, then compute the normalization statistics.
+Clone the repo, first build datasets and set training configurations according to `src/pi0_baseline/training_config.py`, [preprocess the dataset into Lerobot format](src/pi0_baseline/preprocess_lerobot.py), then compute the normalization statistics.
 Setup training script based on `src/pi0_baseline/train.sh`.
 
 
