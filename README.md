@@ -4,6 +4,9 @@
 <div align="center">
     <a href="https://collab.me.vt.edu/lmp/"><img src="https://img.shields.io/static/v1?label=Project%20Page&message=Website&color=blue"></a> &ensp;
     <a href="https://arxiv.org/abs/2602.02839"><img src="https://img.shields.io/static/v1?label=Paper&message=Arxiv&color=red"></a> &ensp; 
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+    </a>
 </div>
 
 > Implementation of Language Movement Primitives (LMP), a framework that grounds VLM reasoning in Dynamic Movement Primitive (DMP) parameterization. 
