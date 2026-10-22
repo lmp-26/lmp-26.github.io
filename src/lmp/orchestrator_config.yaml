@@ -1,0 +1,6 @@
+n_functions: 11
+n_dof: 5
+use_quat: false
+dynamic_tracking: true
+llm_monitoring: false
+monitor_model: "gpt-5.4-nano"

@@ -1,0 +1,18 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Ignore all video folders
+**/video/
+src/camera/rw_images
+src/.env
+src/.nicegui
+src/lmp/cache
+src/camera/Log

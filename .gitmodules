@@ -1,0 +1,3 @@
+[submodule "src/camera/Tracking-Anything-with-DEVA"]
+	path = src/camera/Tracking-Anything-with-DEVA
+	url = https://github.com/hkchengrex/Tracking-Anything-with-DEVA.git
