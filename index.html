@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="description" content="Language Movement Primitives: Grounding Language Models in Robot Motion">
+<meta name="keywords" content="Imitation Learning">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Language Movement Primitives: Grounding Language Models in Robot Motion</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <!-- MathJax for rendering LaTeX math (e.g., $\pi_D$) -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="icon" href="./favicon.ico" sizes="any">
+</head>
+<body>
+
+  
+  <meta lmperty="og:site_name" content="Language Movement Primitives: Grounding Language Models in Robot Motion" />
+  <meta lmperty="og:type" content="video.other" />
+  <meta lmperty="og:title" content="Language Movement Primitives: Grounding Language Models in Robot Motion" />
+  <meta lmperty="og:url" content="https://lmp-26.github.io/"/>
+  <meta lmperty="og:image" content=""/>
+  <meta lmperty="og:image:secure" content=""/>
+  <meta lmperty="og:video" content=""/>
+  <meta lmperty="og:video:secure" content=""/>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title publication-title" style="font-size: 2.7rem;">
+            Language Movement Primitives: <br>
+            Grounding Language Models in Robot Motion
+          </h1>
+          
+          <div class="is-size-5 publication-authors">
+            <!-- <span class="author-block"></sup>Anonymous</span> -->
+              <style>
+              .author-block a {color: rgb(255, 153, 0) !important; text-decoration: none;font-weight: 500;}
+              .author-block a:hover {color: rgb(255, 120, 0) !important; text-decoration: underline;}
+              .author-block {
+                white-space: nowrap; /* prevent breaking mid-name */
+              }
+
+              .author-block a,
+              .author-block span {
+                white-space: nowrap; /* each name stays together */
+              }
+
+              .author-block br {
+                display: none; /* ensure <br> doesn’t interfere */
+              }
+
+              .author-block .comma::after {
+                content: ", ";
+                white-space: normal; /* allow break after comma */
+              }
+              </style>
+            <span class="author-block">Anonymous Authors</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="brmod">Under Review</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/lmp-26/lmp-26.github.io/tree/code"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <div class="content">
+            <h2 class="subtitle has-text-centered" style="font-size: 1.4rem;">
+              <strong><i>DMPs physically ground VLMs because they embed diverse and expressive trajectories into a small number of parameters which the VLM can intuitively tune.</i></strong>
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <!-- Abstract. -->
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>Enabling robots to perform novel manipulation tasks from natural language
+instructions remains a fundamental challenge in robotics, despite significant
+progress in generalized problem solving with foundational models. Large vision
+and language models (VLMs) are capable of processing high-dimensional input
+data for visual scene and language understanding, as well as decomposing tasks
+into a sequence of logical steps; however, they struggle to ground those steps
+in embodied robot motion. On the other hand, robotics foundation models output
+action commands, but require in-domain fine-tuning or experience before they
+are able to perform novel tasks successfully. At its core, there still remains
+the fundamental challenge of connecting abstract task reasoning with low-level
+motion control. To address this disconnect, we propose <b style="color:#FF9900;">Language Movement
+Primitives (LMPs)</b>, a framework that grounds VLM reasoning in Dynamic Movement
+Primitive (DMP) parameterization. Our key insight is that DMPs provide a small
+number of interpretable parameters, and VLMs can set these parameters to
+specify diverse, continuous, and stable trajectories. Put another way: VLMs can
+reason over free-form natural language task descriptions, and semantically
+ground their desired motions into DMPs — bridging the gap between high-level
+task reasoning and low-level position and velocity control. Building on this
+combination of VLMs and DMPs, we formulate our <b style="color:#FF9900;">LMP</b> pipeline for zero-shot robot
+manipulation that effectively completes tabletop manipulation problems by
+generating a sequence of DMP motions. Across 20 real-world manipulation tasks,
+we show that <b style="color:#FF9900;">LMP</b> achieves 80% task success as compared to 31% for the
+best-performing baseline.
+           </p>
+          </div>
+        </div>
+      </div>
+      </div>
+</section>
+
+
+<section class="section">
+  <div class="columns is-centered">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2" style="text-align: center;">Overview</h2>
+      <tr>
+        <td>
+          <br>
+          <div class="columns is-centered has-text-centered">
+            <img src="./static/resources/method.png" style="width: 100%;"></img>
+          </div>
+        </td>
+      </tr>
+      <br>
+      <br>
+      <div class="is-vcentered interpolation-panel">
+        <div class="content has-text-justified">
+<!-- <p style="font-size: 18px">
+  We propose LMP, a combination of VLMs and DMPs. The VLM serves as the high-level policy: this model takes in segmented state observations, breaks the task down into steps, and decides on the next subtask.
+</p> -->
+<p style="font-size: 18px">
+  <b style="color:#FF9900;">LMP</b> pipeline for a single subtask rollout. $(a)$ The robot begins with a user-provided task description. The robot then collects an image capturing the current environment state, and remembers any previously performed subtask(s). $(b)$ The decomposer $\pi_D$ identifies scene objects and outputs a subtask for the next DMP to complete. An open-vocabulary classifier and depth sensing are used to estimate 3D object locations. The scene description and proposed subtask are then forwarded to the DMP weight generator $\pi_G$. $(c)$ The generator predicts DMP weights and auxiliary parameters to define the low-level reference trajectory. $(d)$ The robot tracks the continuous trajectory generated from the predicted DMP parameters. Optionally, the user may observe the robot and provide natural-language feedback about any mistakes. If the user gives this refinement $r$, then the robot resets the rollout and the process repeats from $(b)$.
+</p>
+        </div>
+      </div>
+  </div>
+  </div>
+</section>
+
+<nav class="subnav" id="subnav" aria-label="Sections">
+  <div class="subnav-tabs">
+    <a href="#experiments" data-page="experiments">Experiments</a>
+    <a href="#baselines" data-page="baselines">Baselines</a>
+    <a href="#playground" data-page="playground">Playground</a>
+    <a href="#implementation" data-page="implementation">Implementation</a>
+  </div>
+</nav>
+
+<div class="subpage" data-page="baselines">
+<section class="section" id="baselines">
+  <div class="container is-max-desktop">
+    <h2 class="title is-2" style="text-align: center;">Baselines</h2>
+    <p class="experiment-row-caption">What each method receives.</p>
+
+    <div class="pl-tabs" role="tablist">
+      <button class="pl-tab is-active" data-method="lmp" role="tab"><b>LMP</b></button>
+      <button class="pl-tab" data-method="jf" role="tab"><b>LMP</b> J/F</button>
+      <button class="pl-tab" data-method="trajgen" role="tab">TrajGen</button>
+      <button class="pl-tab" data-method="pi" role="tab">&pi;<sub>0.5</sub></button>
+    </div>
+
+    <div class="pl-figure">
+      <svg id="pl-svg" viewBox="0 0 1000 490" role="img" aria-label="Components used by each method">
+        <defs>
+          <marker id="pl-arrow-on" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#e68a00"/>
+          </marker>
+          <marker id="pl-arrow-off" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#c8c8c8"/>
+          </marker>
+        </defs>
+
+        <g class="pl-edges">
+          <path class="pl-edge" data-stages="lmp:0 jf:0" d="M170 140 H228"/>
+          <path class="pl-edge" data-stages="lmp:0 jf:0 trajgen:1" d="M170 275 H228"/>
+          <path class="pl-edge" data-stages="lmp:1 jf:1" d="M315 215 V172"/>
+          <path class="pl-edge" data-stages="lmp:1 jf:1 trajgen:2" d="M400 275 H545 V172"/>
+          <path class="pl-edge" data-stages="trajgen:0" d="M95 110 V90 H520 V108"/>
+          <path class="pl-edge" data-stages="trajgen:1" d="M512 172 V255 H402"/>
+          <path class="pl-edge" data-stages="lmp:2 jf:2" d="M400 140 H458"/>
+          <path class="pl-edge" data-stages="lmp:3 jf:3 trajgen:3" d="M630 140 H688"/>
+          <path class="pl-edge" data-stages="lmp:4 jf:4 trajgen:4" d="M850 140 H930 V198"/>
+          <path class="pl-edge pl-feedback" data-stages="lmp:5" d="M960 200 V42 H782"/>
+          <path class="pl-edge pl-feedback" data-stages="lmp:6" d="M600 42 H315 V108"/>
+          <path class="pl-edge pl-feedback" data-stages="lmp:6" d="M615 70 V108"/>
+          <path class="pl-edge" data-stages="pi:0" d="M20 150 H8 V478 H655 V457"/>
+          <path class="pl-edge" data-stages="pi:0" d="M170 295 H200 V410 H458"/>
+          <path class="pl-edge" data-stages="pi:0" d="M170 440 H458"/>
+          <path class="pl-edge" data-stages="pi:1" d="M850 425 H930 V312"/>
+        </g>
+
+        <g class="pl-node" data-methods="lmp jf trajgen pi">
+          <rect x="20" y="110" width="150" height="60" rx="10"/>
+          <text class="pl-title" x="95" y="138">Instruction</text>
+          <text class="pl-sub" x="95" y="157">task in language</text>
+        </g>
+        <g class="pl-node" data-methods="lmp jf trajgen pi">
+          <rect x="20" y="240" width="150" height="70" rx="10"/>
+          <text class="pl-title" x="95" y="281">Scene camera</text>
+        </g>
+        <g class="pl-node" data-methods="pi">
+          <rect x="20" y="410" width="150" height="60" rx="10"/>
+          <text class="pl-title" x="95" y="445">Wrist camera</text>
+        </g>
+
+        <g class="pl-node" data-methods="lmp jf trajgen">
+          <rect x="230" y="110" width="170" height="60" rx="10"/>
+          <text class="pl-title" x="315" y="137">Decomposer</text>
+          <text class="pl-sub" x="315" y="157">Gemini Robotics-ER 1.5</text>
+        </g>
+        <g class="pl-node" id="pl-perception" data-methods="lmp jf trajgen">
+          <rect x="230" y="215" width="170" height="120" rx="10"/>
+          <text class="pl-title" x="315" y="240">Perception</text>
+          <text class="pl-sub" id="pl-per-sub" x="315" y="259">labels, masks, depth</text>
+          <rect class="pl-table" x="245" y="267" width="140" height="58" rx="4"/>
+          <circle class="pl-obj" cx="275" cy="298" r="9" fill="#c94b4b"/>
+          <rect class="pl-obj" x="309" y="281" width="12" height="30" rx="3" fill="#4a8f5a"/>
+          <ellipse class="pl-obj" cx="355" cy="300" rx="18" ry="10" fill="#8a7a66"/>
+          <circle class="pl-mask" cx="275" cy="298" r="9"/>
+          <rect class="pl-mask" x="309" y="281" width="12" height="30" rx="3"/>
+          <ellipse class="pl-mask" cx="355" cy="300" rx="18" ry="10"/>
+          <rect class="pl-bbox" x="263" y="286" width="24" height="24"/>
+          <rect class="pl-bbox" x="305" y="277" width="20" height="38"/>
+          <rect class="pl-bbox" x="334" y="287" width="42" height="26"/>
+          <circle class="pl-pin" cx="275" cy="298" r="2.5"/>
+          <circle class="pl-pin" cx="315" cy="296" r="2.5"/>
+          <circle class="pl-pin" cx="355" cy="300" r="2.5"/>
+        </g>
+
+        <g class="pl-node" data-methods="lmp jf trajgen">
+          <rect x="460" y="110" width="170" height="60" rx="10"/>
+          <text class="pl-title" x="545" y="137">Generator</text>
+          <text class="pl-sub" id="pl-gen-sub" x="545" y="157">GPT-5.2</text>
+        </g>
+        <g class="pl-node" data-methods="lmp jf trajgen">
+          <rect x="690" y="110" width="160" height="60" rx="10"/>
+          <text class="pl-title" id="pl-motion-title" x="770" y="137">DMP weights</text>
+          <text class="pl-sub" id="pl-motion-sub" x="770" y="157">+ goal offset</text>
+        </g>
+
+        <g class="pl-node" data-methods="trajgen">
+          <text class="pl-code" x="504" y="207" text-anchor="end">detect_object()</text>
+        </g>
+
+        <g class="pl-node" data-methods="lmp">
+          <rect x="600" y="15" width="180" height="55" rx="10"/>
+          <text class="pl-title" x="690" y="40">Human feedback</text>
+          <text class="pl-sub" x="690" y="58">up to 3 rounds</text>
+        </g>
+
+        <g class="pl-node" data-methods="pi">
+          <rect x="460" y="395" width="390" height="60" rx="10"/>
+          <text class="pl-title" x="655" y="419">&pi;<tspan dy="4" font-size="70%">0.5</tspan></text>
+          <text class="pl-sub" x="655" y="443">5 demos per task &rarr; end-effector velocity</text>
+        </g>
+
+        <g class="pl-node" data-methods="lmp jf trajgen pi">
+          <rect x="880" y="200" width="100" height="110" rx="10"/>
+          <text class="pl-title" x="930" y="225">Robot</text>
+          <rect class="pl-robot" x="912" y="285" width="34" height="8" rx="2"/>
+          <path class="pl-robot-arm" d="M929 285 L922 258 L952 246 L962 262"/>
+          <path class="pl-robot-arm pl-robot-grip" d="M956 266 L962 262 L968 268"/>
+        </g>
+
+        <g id="pl-packets"></g>
+      </svg>
+    </div>
+    <p class="pl-caption" id="pl-caption"></p>
+
+    <div class="table-container methods-table-wrap">
+      <table class="table is-fullwidth methods-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="lmp-col">LMP</th>
+            <th>LMP J/F</th>
+            <th>TrajGen</th>
+            <th>&pi;<sub>0.5</sub></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Perception</th>
+            <td class="lmp-col">Gemini Robotics-ER 1.5 labels, LangSAM masks, depth &rarr; 3D poses</td>
+            <td>Same as LMP</td>
+            <td>LangSAM + depth, called from generated code</td>
+            <td>Raw scene and wrist images</td>
+          </tr>
+          <tr>
+            <th>Task decomposition</th>
+            <td class="lmp-col">Gemini Robotics-ER 1.5</td>
+            <td>Same as LMP</td>
+            <td>None, GPT-5.2 plans in its own code</td>
+            <td>None, task instruction only</td>
+          </tr>
+          <tr>
+            <th>Language model</th>
+            <td class="lmp-col">GPT-5.2</td>
+            <td>GPT-5.2</td>
+            <td>GPT-5.2</td>
+            <td>&pi;<sub>0.5</sub> (end-to-end)</td>
+          </tr>
+          <tr>
+            <th>Motion</th>
+            <td class="lmp-col">DMP weights + goal offset</td>
+            <td>DMP weights + goal offset</td>
+            <td>Waypoints from generated code</td>
+            <td>End-effector velocity</td>
+          </tr>
+          <tr>
+            <th>In-domain data</th>
+            <td class="lmp-col">None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>5 demos per task (155 total)</td>
+          </tr>
+          <tr>
+            <th>Feedback</th>
+            <td class="lmp-col">Human, up to 3 rounds</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="subpage" data-page="experiments">
+<section class="section" id="experiments">
+  <div class="container is-max-desktop">
+    <h2 class="title is-2" style="text-align: center;">Experiments</h2>
+    <div class="experiment-row" data-scroll-row>
+      <h3 class="title is-4 experiment-subheader">Spatial Reasoning</h3>
+      <p class="experiment-row-caption">Understanding spatial relations between objects in the environment.</p>
+      <div class="video-scroll-container">
+        <button class="scroll-button left"><span class="scroll-icon">&#8249;</span></button>
+        <div class="video-scroll">
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/place_rightmost_fruit_near_the_bottle.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Move the fruit which is on the right towards the bottle.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/pick_up_chip_to_right_of_can.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Pick the chip bag which is to the right of the can.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/pick_chip_on_left.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Pick the chip bag on the left of the table.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/insert_bread.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Insert the bread into the toaster.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/move_can_to_center.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Move the can to the center of the table.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/put_apple_in_middle.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Pick the apple from the bowl and place it on the table.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/pick_right_can.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Pick the rightmost can.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/pick_bowl.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Pick up the bowl.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/pick_middle_fruit.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Pick the fruit in the middle.</p>
+          </div>
+        </div>
+        <button class="scroll-button right"><span class="scroll-icon">&#8250;</span></button>
+      </div>
+      <div class="video-dots" aria-hidden="true"></div>
+    </div>
+    <div class="experiment-row" data-scroll-row>
+      <h3 class="title is-4 experiment-subheader">Obstacle Awareness</h3>
+      <p class="experiment-row-caption">Recognizing configurations the robot must avoid.</p>
+      <div class="video-scroll-container">
+        <button class="scroll-button left"><span class="scroll-icon">&#8249;</span></button>
+        <div class="video-scroll">
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/place_banana_near_pear.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Move the banana near the pear.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/put_apple_in_bowl.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Place the apple in the bowl.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/drop_ball.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Drop the ball into the cup.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/LMP_banana_5.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Put the banana on the plate.</p>
+          </div>
+          
+          
+
+        </div>
+        <button class="scroll-button right"><span class="scroll-icon">&#8250;</span></button>
+      </div>
+      <div class="video-dots" aria-hidden="true"></div>
+    </div>
+    <div class="experiment-row" data-scroll-row>
+      <h3 class="title is-4 experiment-subheader">Semantic Understanding</h3>
+      <p class="experiment-row-caption">Inferring intent from under-specified instructions.</p>
+      <div class="video-scroll-container">
+        <button class="scroll-button left"><span class="scroll-icon">&#8249;</span></button>
+        <div class="video-scroll">
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/wipe.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Wipe the plate.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/move_lonely_objects.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Move the lonely object to the others.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/shirt.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Hang the shirt.</p>
+          </div>
+  
+          
+        </div>
+        <button class="scroll-button right"><span class="scroll-icon">&#8250;</span></button>
+      </div>
+      <div class="video-dots" aria-hidden="true"></div>
+    </div>
+
+    <p class="experiment-row-caption inline-row-caption">We evaluate <b style="color:#FF9900;">LMP</b> on 20 household tasks,
+    assessing overall task success rate compared to <a href="https://www.pi.website/blog/pi05">$\pi_{0.5}$</a> and
+    <a href="https://www.robot-learning.uk/language-models-trajectory-generators">TrajGen</a>.</p>
+    <div class="inline-video-row">
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/trajgen_banana_7.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(160, 212, 164);">TrajGen</span>
+        <span class="inline-video-speed">X7</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/pi_banana_10.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(141, 95, 211);">$\pi_{0.5}$</span>
+        <span class="inline-video-speed">X10</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/LMP_banana_5.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(255, 153, 0);">LMP</span>
+        <span class="inline-video-speed">X5</span>
+      </div>
+    </div>
+    <p class="inline-video-caption">Put the banana on the plate.</p>
+    <div class="inline-video-row">
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/trajgen_sponge_13.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(160, 212, 164);">TrajGen</span>
+        <span class="inline-video-speed">X13</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/pi_sponge_7.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(141, 95, 211);">$\pi_{0.5}$</span>
+        <span class="inline-video-speed">X7</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/LMP_sponge_5.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(255, 153, 0);">LMP</span>
+        <span class="inline-video-speed">X5</span>
+      </div>
+    </div>
+    <p class="inline-video-caption">Wipe the plate.</p>
+    <div class="inline-video-row">
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/trajgen_shirt_9.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(160, 212, 164);">TrajGen</span>
+        <span class="inline-video-speed">X9</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/pi_shirt_12.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(141, 95, 211);">$\pi_{0.5}$</span>
+        <span class="inline-video-speed">X12</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/LMP_shirt_4.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(255, 153, 0);">LMP</span>
+        <span class="inline-video-speed">X4</span>
+      </div>
+    </div>
+    <p class="inline-video-caption">Hang the shirt.</p>
+    <div class="inline-video-row">
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/trajgen_bottle_9.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(160, 212, 164);">TrajGen</span>
+        <span class="inline-video-speed">X9</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/pi_bottle_10.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(141, 95, 211);">$\pi_{0.5}$</span>
+        <span class="inline-video-speed">X10</span>
+      </div>
+      <div class="inline-video-card">
+        <video class="inline-video" autoplay loop muted>
+          <source src="./static/resources/LMP_bottle_4.mp4" type="video/mp4">
+        </video>
+        <span class="inline-video-tag" style="color: rgb(255, 153, 0);">LMP</span>
+        <span class="inline-video-speed">X4</span>
+      </div>
+    </div>
+    <p class="inline-video-caption">Move the fruit which is on the right towards the bottle.</p>
+
+    <div class="paths-block">
+      <h3 class="title is-4 experiment-subheader">Gripper Paths</h3>
+      <p class="experiment-row-caption">The gripper's path in each evaluation above, tracked from the video and drawn on its first frame. Open circle: start. Filled circle: end.</p>
+      <div class="dp-examples paths-tabs">
+        <button class="dp-chip is-active" type="button" data-task="banana" data-caption="Put the banana on the plate.">Banana</button>
+        <button class="dp-chip" type="button" data-task="sponge" data-caption="Wipe the plate.">Sponge</button>
+        <button class="dp-chip" type="button" data-task="shirt" data-caption="Hang the shirt.">Shirt</button>
+        <button class="dp-chip" type="button" data-task="bottle" data-caption="Move the fruit which is on the right towards the bottle.">Fruit</button>
+      </div>
+      <div class="inline-video-row">
+        <div class="inline-video-card">
+          <img class="inline-video path-img" data-method="trajgen" src="./static/resources/paths/path_banana_trajgen.jpg" alt="TrajGen gripper path">
+          <span class="inline-video-tag" style="color: rgb(160, 212, 164);">TrajGen</span>
+        </div>
+        <div class="inline-video-card">
+          <img class="inline-video path-img" data-method="pi" src="./static/resources/paths/path_banana_pi.jpg" alt="pi0.5 gripper path">
+          <span class="inline-video-tag" style="color: rgb(141, 95, 211);">$\pi_{0.5}$</span>
+        </div>
+        <div class="inline-video-card">
+          <img class="inline-video path-img" data-method="LMP" src="./static/resources/paths/path_banana_LMP.jpg" alt="LMP gripper path">
+          <span class="inline-video-tag" style="color: rgb(255, 153, 0);">LMP</span>
+        </div>
+      </div>
+      <p class="inline-video-caption paths-caption">Put the banana on the plate.</p>
+    </div>
+
+    <div class="experiment-row" data-scroll-row>
+      <h3 class="title is-4 experiment-subheader">Reactive Adaptation</h3>
+      <p class="experiment-row-caption">Adapt to dynamic changes in the environment in real-time.</p>
+      <div class="video-scroll-container">
+        <button class="scroll-button left"><span class="scroll-icon">&#8249;</span></button>
+        <div class="video-scroll">
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/dynamic/knock_bottle.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Knock over the left bottle.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/dynamic/wipe.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Wipe the plate.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/dynamic/apple_in_bowl.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Place the apple in the bowl.</p>
+          </div>
+          <div class="video-card">
+            <video class="scroll-video" autoplay loop muted>
+              <source src="./static/resources/dynamic/obstacle.mp4" type="video/mp4">
+            </video>
+            <p class="video-caption">Put the banana on the plate.</p>
+          </div>
+        </div>
+        <button class="scroll-button right"><span class="scroll-icon">&#8250;</span></button>
+      </div>
+      <div class="video-dots" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="subpage" data-page="playground">
+<section class="section" id="playground">
+  <div class="container is-max-desktop" id="dmp-playground">
+    <h2 class="title is-2" style="text-align: center;">DMP Playground</h2>
+    <p class="experiment-row-caption">Drag the weights to reshape the motion. Examples start from the weights the generator produced.</p>
+    <div class="dp-examples"></div>
+    <p class="dp-subtask"><span>Subtask</span> <span class="dp-subtask-text"></span></p>
+    <div class="dp-view">
+      <canvas></canvas>
+      <div class="dp-view-buttons">
+        <button class="dp-btn dp-replay" type="button">Replay</button>
+        <button class="dp-btn dp-reset" type="button">Reset</button>
+        <button class="dp-btn dp-zero" type="button">Zero</button>
+      </div>
+      <p class="dp-view-fallback">3D view could not load.</p>
+    </div>
+    <div class="dp-legend">
+      <span><i class="dp-key dp-key-dmp"></i>DMP</span>
+      <span><i class="dp-key dp-key-base"></i>All weights zero</span>
+      <span><i class="dp-key dp-key-goal"></i>Goal</span>
+    </div>
+    <div class="dp-head">
+      <span></span><span>Weights</span><span>Position (m)</span>
+    </div>
+    <div class="dp-dofs"></div>
+    <details class="prompt-box dp-json-box">
+      <summary>Weights as JSON</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre class="dp-json"></pre></div>
+    </details>
+    <div class="dropdown-video-section">
+      <div class="dropdown-video-controls">
+        <label for="dropdown-video-select" class="dropdown-video-label">Select and visualize and the motion generated:</label>
+        <select id="dropdown-video-select" class="dropdown-video-select">
+          <option value="option-1" data-video="./static/resources/dmp_wipe.mp4" data-image="./static/resources/dmp_wipe.svg">Wipe the plate.</option>
+          <option value="option-2" data-video="./static/resources/dmp_carry.mp4" data-image="./static/resources/dmp_carry.svg">Carry the banana to the plate, lifting it high and moving forward to avoid the bottle.</option>
+          <option value="option-3" data-video="./static/resources/dmp_reach.mp4" data-image="./static/resources/dmp_reach.svg">Reach and grasp the apple in the bowl.</option>
+        </select>
+      </div>
+      <div class="dropdown-media-split">
+        <div class="dropdown-image-pane">
+          <img id="dropdown-image" class="dropdown-image" src="./static/resources/placeholder-image-1.jpg" alt="Placeholder image">
+        </div>
+        <div class="dropdown-video-pane">
+          <video id="dropdown-video" class="dropdown-video" autoplay loop muted playsinline>
+            <source id="dropdown-video-source" src="./static/resources/placeholder-video-1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="subpage" data-page="implementation">
+<section class="section" id="implementation">
+  <div class="container is-max-desktop">
+    <h2 class="title is-2" style="text-align: center;">Implementation</h2>
+    <p class="experiment-row-caption">Values from the code that ran the experiments.</p>
+
+    <h3 class="title is-4 experiment-subheader">DMP</h3>
+    <div class="impl-eq">$$\tau \dot z = \alpha_z \beta_z (g - \xi) - \alpha_z z + F\, x \frac{\sum_i w_i \psi_i(\tilde t)}{\sum_i \psi_i(\tilde t)}, \qquad \tau \dot \xi = z, \qquad x = e^{-\alpha_x \tilde t^{3}}, \qquad \tilde t = \min(t/\tau,\, 1)$$</div>
+    <div class="table-container">
+      <table class="table is-fullwidth impl-table">
+        <thead>
+          <tr><th></th><th>x, y, z, yaw</th><th>Gripper</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Basis</th><td>11 Gaussians, centers $0, 0.1, \dots, 1$, $h = 1600$</td><td>11 steps</td></tr>
+          <tr><th>$\beta_z$</th><td>5.2</td><td>10.5</td></tr>
+          <tr><th>$\alpha_z$</th><td>20.8 ($4\beta_z$)</td><td>8.4 ($0.8\beta_z$)</td></tr>
+          <tr><th>Forcing gain $F$</th><td>2</td><td>8</td></tr>
+          <tr><th>Phase decay $\alpha_x$</th><td>4.5</td><td>0</td></tr>
+          <tr><th>$\tau$</th><td>1</td><td>1</td></tr>
+          <tr><th>Generator weight range</th><td>$[-0.9, 0.9]$</td><td>$[-1, 1]$</td></tr>
+          <tr><th>Weight scale</th><td>&times;20 (x, y, z), &times;200 (yaw)</td><td>&times;10</td></tr>
+          <tr><th>Command</th><td>Position and yaw setpoint</td><td>Close above 0.5, open below</td></tr>
+          <tr><th>Integration</th><td colspan="2">Step 0.003 per control cycle, until $x &lt; 0.0112$</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="title is-4 experiment-subheader">Controller</h3>
+    <div class="table-container">
+      <table class="table is-fullwidth impl-table">
+        <tbody>
+          <tr><th>Robot</th><td>Franka Emika Panda, joint velocity commands</td></tr>
+          <tr><th>Tracking</th><td>Cartesian P control on position and yaw, $k_p = 1.2$</td></tr>
+          <tr><th>Velocity mapping</th><td>$\dot q = J^{+} \dot x$, $\lVert \dot q \rVert \le 1$</td></tr>
+          <tr><th>Workspace guards</th><td>$x \le 0.8$ m, $z \ge 0.065$ m</td></tr>
+          <tr><th>Camera</th><td>Orbbec Femto Mega (RGB-D)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="title is-4 experiment-subheader">Models</h3>
+    <div class="table-container">
+      <table class="table is-fullwidth impl-table">
+        <thead>
+          <tr><th></th><th>Model</th><th>Settings</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Object labels</th><td><code>gemini-robotics-er-1.5-preview</code></td><td>Temperature 0.5, thinking budget 0</td></tr>
+          <tr><th>Segmentation</th><td>LangSAM (Grounding DINO base, SAM 2.1 Hiera-S)</td><td>Box threshold 0.3, text threshold 0.25</td></tr>
+          <tr><th>Decomposer</th><td><code>gemini-robotics-er-1.5-preview</code></td><td>Temperature 0, thinking budget 0</td></tr>
+          <tr><th>Generator</th><td><code>gpt-5.2</code></td><td>Temperature 0, 480&times;270 scene image</td></tr>
+          <tr><th>Output parsing</th><td colspan="2">Text from the first <code>{</code> to the last <code>}</code>, read as JSON</td></tr>
+          <tr><th>Judge</th><td>Human</td><td>Up to 3 rounds of feedback</td></tr>
+          <tr><th>TrajGen</th><td><code>gpt-5.2</code></td><td>Temperature 0, <code>detect_object()</code> box threshold 0.15</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="prompts">
+  <div class="container is-max-desktop">
+    <h2 class="title is-2" style="text-align: center;">Prompts</h2>
+    <p class="experiment-row-caption">Fields in <b>bold</b> are filled at runtime.</p>
+    <h3 class="title is-4 experiment-subheader">Decomposer <span class="prompt-model">Gemini Robotics-ER 1.5</span></h3>
+    <details class="prompt-box" open>
+      <summary>System prompt</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre>You are a helpful assistant that proposes high-level subtasks for robot manipulation based on video evidence. 
+
+&lt;think&gt;
+    your reasoning
+&lt;/think&gt;
+    
+&lt;answer&gt;
+    your answer
+&lt;/answer&gt;
+
+<b>&lt;OVERALL_TASK&gt;</b></pre></div>
+    </details>
+    <details class="prompt-box">
+      <summary>User prompt</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre>The overall goal is <b>&lt;OVERALL_TASK&gt;</b>. 
+The agent in the video is currently performing one subtask out of many to complete this instruction. 
+
+In the environment, the available OBJECT are:
+<b>&lt;OBJ_LIST&gt;</b>
+
+So far, the agent has completed the following subtasks:
+<b>&lt;PRIOR_TASKS&gt;</b>
+
+For the agent in the video, what is the most plausible next immediate subtask?
+Also identify whether any obstacles lie along the execution path of this subtask.
+When obstacles are present, generate a collision avoidance plan that enables successful task completion.
+
+Collision avoidance plan template:
+Potential collision with &lt;OBSTACLE&gt;, avoid by &lt;DEVIATION_STRATEGY&gt;.
+
+Rules (must follow strictly):
+    - Prefer multi-dimensional deviations, e.g., combining at least two of: 
+      lifting upward, or shifting forward, shifting left, shifting right or otherwise.
+    - Deviation must be local and temporary, defined only in the gripper frame.
+    - Do not reference the task goal, target object, or intended path, deviation must be goal-agnostic.
+    - Choose the primary horizontal deviation orthogonal to the obstacle position:
+    - Obstacle on left/right -&gt; deviate left/right.
+    - Obstacle in front/back -&gt; deviate forward/backward.
+
+
+Choose from the following options, and instantiate with the correct object if needed:
+- REACH(&lt;OBJECT&gt;)
+- CARRY(&lt;OBJECT&gt;) to (&lt;OBJECT&gt;), &lt;collision avoidance plan&gt; (if needed)
+- WIPING(&lt;OBJECT&gt;)
+- RELEASE(&lt;OBJECT&gt;)</pre></div>
+    </details>
+    <h3 class="title is-4 experiment-subheader prompt-group">Generator <span class="prompt-model">GPT-5.2</span></h3>
+    <details class="prompt-box">
+      <summary>System prompt</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre>You are a helpful assistant that generates dynamics motion primitive weights for a given robot manipulation task. 
+
+You need to generate <b>${.total_weights}</b> weights for a Dynamic Movement Primitive (DMP) with <b>${.dimensions}</b> dimensions and <b>${.num_functions}</b> basis functions.
+Internally, you need to first analyze the provided scene description and determine if there are any potential collisions between the robot and other objects in the environment on its path to the goal.
+Your generated weights should help the robot avoid collisions while efficiently reaching the goal with a smooth trajectory.
+
+**Understanding DMPs and Weight Function:**
+A DMP generates smooth trajectories from a start position to a goal position. The weights you generate control a &#x27;forcing function&#x27; that shapes the trajectory. Here&#x27;s how it works:
+
+1. **Basis Functions**: The DMP uses <b>${.num_functions}</b> radial basis functions distributed along the movement timeline (from start to end).
+We use equaldistant Gaussian basis functions:
+basis_locations = np.linspace(0.0, 1.0, n_functions, dtype=np.float32)
+basis_variance = np.array([1.0 / (0.25 * (1.0 / (n_functions - 1)))**2] * n_functions, dtype=np.float32)
+psi = torch.exp(-basis_variance * (x - basis_locations) ** 2)
+2. **Weight Role**: Each weight corresponds to one basis function in one dimension. The weights determine how much each basis function contributes to the overall movement shape
+3. **Trajectory Generation**: The DMP combines:
+- A stable attractor (pulls toward goal)
+- Your weighted forcing function (creates the desired movement pattern)
+
+**Weight Guidelines:**
+- Weights should be between -0.9 and 0.9 (both positive and negative values are useful)
+- **Early weights** (indices 0-3): Affect movement near the start position
+- **Middle weights** (indices 4-6): Affect movement in the middle of the trajectory  
+- **Late weights** (indices 7-10): Affect movement near the goal position
+- **Weight magnitude**: Larger absolute values create more pronounced effects
+- **Symmetric positive and negative weights**: These are **not** as important as the DMPs will always be attracted to the goal position. Adjust weights prioritize on obstacle locations and desired path shape.
+
+**Zero-By-Default Rule (Strict)**
+- Default output MUST be all zeros for every motion dimension (x, y, z, qz, etc.).
+- Non-zero weights are allowed ONLY when explicitly required by:
+    (1) obstacle detected or obstacle avoidance plan given, or
+    (2) an explicitly stated motion ordering constraint that cannot be satisfied with zeros
+        (e.g., &quot;lift immediately at the very beginning&quot; for carry tasks), or
+    (3) an explicit instruction in the action plan / correction history or by the trajectory requirements of the task itself.
+- If none of the above triggers apply, output exactly all zeros.
+- Prefer early non-zero weights over late non-zero weights when non zero weights are required. 
+
+**Direction Guidelines:**
+- Positive weights in a dimension will push the trajectory in the positive direction of that dimension, while negative weights will push it in the negative direction.
+- For example, increasing x means pushing the trajectory to the front, closer to the camera and further from the robot base.
+- Increasing y means pushing the trajectory to the right side of the image.
+- Increasing z means pushing the trajectory upwards, away from the table.
+
+Default Assumption
+  - Unless explicitly instructed otherwise, or unless required to avoid an obstacle or constraint, the DMP should not be strongly influenced at the very end of the trajectory.
+Boundary Indices
+  - Beginning of trajectory: indices 0-3
+  - End of Trajectory: indices 8-10
+Required behavior
+  - By default, keep the absolute values of weights at the end SMALL relative to the beginning and middle of the trajectory
+  - Do NOT place large-magnitude weights at the last indices by default.
+  - Do NOT force activation or supression at the very end unless required.
+  - These boundary weights should act as gentle bias terms, not dominant drivers of motion.
+When to Override
+  - It is acceptable to use large magnitudes at the boundaries only if:
+    - Explicity told to do so, or
+    - Necessary to avoid an obstacle or enforce a constraint
+
+**Gripper Guidelines:**
+Core Rules
+  - The gripper command is binary, but it is driven by a continuous DMP trajectory.
+  - The role of the weight vector is to control when the DMP trajectory crosses the internal “close” region.
+  - Do not think in terms of partially closing the gripper.
+  - Think in terms of making the trajectory cross the close condition earlier or later in time.
+
+Weight Vector Structure
+  - The gripper weight vector has indices 0-10 (11 total values).
+  - Each index contributes continuously to the DMP trajectory over time.
+  - The distribution and magnitude of weights determine when the trajectory rises enough to trigger closure.
+
+Value Limits
+  - Minimum value: -1
+  - Maximum value: +1
+  - Larger magnitude = stronger influence on the DMP at that phase.
+
+Examples (when the starting point is at 0 / open, goal is at 1 / closed, and the close condition is at 0.5):
+  -Trajectory crosses the close condition around ~75% of the motion
+    [-1, -1, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.2, 0, 0]
+    -Interpretation
+      -Strong negative bias dominates early and mid trajectory
+      - Trajectory begins rising late
+      - Close condition is reached before the final index
+
+  -Trajectory crosses the close condition very late (~95%)
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1]
+    -Interpretation
+      - Trajectory is strongly suppressed for almost the entire motion
+      - A single late positive term forces a late crossing
+      - Abrupt late activation is valid and expected
+
+Generation Rules 
+  - Do NOT describe the gripper as “partially closed.”
+  - Do NOT reason in terms of percentages of closure.
+  - Do NOT assume the trajectory must cross early to be valid.
+  - Late or abrupt crossings are correct behavior when contact happens late.
+  - If uncertain, delay the crossing rather than advancing it.
+
+How Timing is Controlled
+  - Large negative values held longer delay the trajectory from reaching the close condition.
+  - Introducing positive values later causes the trajectory to rise late.
+  - Concentrating strong positives at the very end forces a very late crossing.
+  - There is no requirement that the sign must flip early or smoothly.
+
+Default behavior:
+  - Majority of gripper actions are going to happen at the very end of the trajectory, therefore the default behavior is to cloes the gripper at the VERY END of the trajectory. 
+
+***Gripper Z-Axis Rotation Rule (Angle Selection):***
+Core Rules:
+  - The &quot;angle&quot; field represents a rotation (in radians) about the robot end-effector Z axis
+  (the axis pointing out of the gripper toward the object), which rotates the gripper jaws
+  in the image plane.
+
+Image-plane convention (must follow exactly):
+  -When &quot;angle&quot; = 0.0:
+    - The gripper jaws close from RIGHT to LEFT in the image.
+    - The gripper closing direction is horizontal.
+  - A rotation of approximately ±π/2 results in the gripper closing from TOP to BOTTOM in the image
+  (vertical closing direction).
+
+Primary objective for rotation:
+  - The gripper should close across the SKINNIEST stable cross-section of the task object.
+  - “Skinnest” means the minimum object width measured along the gripper closing direction.
+
+When to introduce a non-zero angle:
+  - Only set a non-zero &quot;angle&quot; if failing to rotate would cause the gripper to attempt a grasp along a clearly thicker dimension of the object, making a stable grasp unlikely or impossible.
+  - Rotation is considered strictly necessary when:
+      - The object is elongated or anisotropic, AND
+      - The object&#x27;s minimum thickness axis is approximately perpendicular to the default right-to-left closing direction.
+
+Decision guidance:
+  - If the object appears long LEFT↔RIGHT in the image (horizontal major axis, and object angle close to ±1.57), then the skinnest grasp direction is TOP/BOTTOM -&gt; set &quot;angle&quot; approx +π/2.
+  - If the object appears long TOP↕BOTTOM in the image (vertical major axis, and object angle close to 0), then the skinnest grasp direction is LEFT &lt;-&gt; RIGHT -&gt; keep &quot;angle&quot; = 0.0.
+
+Important invariant:
+  - &quot;angle&quot; is a one-time decision made for grasp feasibility.
+  - Carrying preserves the chosen angle; it does NOT force &quot;angle&quot; back to 0.0.
+
+Summary rule:
+  - Default to &quot;angle&quot; = 0.0.
+  - Introduce a non-zero &quot;angle&quot; ONLY when rotation is required to align the gripper closing direction with the object&#x27;s minimum thickness axis for a feasible grasp.
+  - Determine the necessity from image and target object angle information.
+
+***Height offset selection:***
+
+  - The &quot;height&quot; field represents a vertical offset (in meters) applied to the goal position of the DMP trajectory
+  - It is by default 0.0, and the goal will be the central point of the targeting object.
+  - Only change the &quot;height&quot; when necessary or specified otherwise.
+
+The weights should be provided in JSON format containing a list of <b>${.dimensions}</b> sets of <b>${.num_functions}</b> weights. Here is an example for 2 dimensions and 10 basis functions:
+
+{{
+  &quot;weights&quot;: [
+      [0.1, -0.2, 0.3, -0.4, 0.0, 0.2, -0.1, 0.3, -0.2, 0.1],
+      [-0.1, 0.5, 1.0, 2.0s, 2.0, 2.0, 1.0, 0.1, 0.2, -0.1]
+  ],
+  &quot;angle&quot;: 0.0,
+  &quot;height&quot;: 0.0
+}}
+
+Please provide only the weights in the specified JSON format, nothing else.
+Your response must begin with { and end with }. Do not include any other characters, code fences, or markdown formatting.</pre></div>
+    </details>
+    <details class="prompt-box">
+      <summary>User prompt: scene</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre>Description
+-------------------------------------------
+
+The environment is a real world setting of a Panda Emika robot arm with 7 degrees of freedom (DoF) placed on tabletop.
+
+Action Space
+-------------------------------------------
+
+The action space is a `Box(-1, 1, (<b>${.dimensions}</b>,), float32)`. An action is &#x27;(x, y, z, qz, gripper action)&#x27;.
+The first 3 dimensions (i.e., (x, y, z)) represent the target positions for the TCP (i.e., the end-effector).
+The second last dimension represents the orientation of the end-effector in z axis (i.e., qz). The orientation in x and y axis are fixed as the starting orientation of the robot.
+The last dimension represents the gripper open/close action, a binary action (1 for close, 0 for open) corresponding to the gripper joints.
+Note that *you do not interact with the action space directly*. Instead, you are to output DMP weights that satisfy the objectives of the current task.
+
+Observation Space
+-------------------------------------------
+
+The observation space consists of the following parts:
+
+The robot&#x27;s base position is <b>${.robot_base_position}</b>, the robot&#x27;s base orientation is <b>${.robot_base_orientation}</b>.
+The initial position of the tcp is <b>${.initial_tcp_position}</b>.
+The position state of the goal is where the <b>${.goal_obj_name}</b> is currently located.
+The initial velocity state of the robot is <b>${.initial_tcp_velocities}</b>.
+The movable objects in the scene are initialized as:
+<b>${.movable_objects}</b>.
+
+The position (x, y, z) are reported in meters relative to the world frame. 
+The angle is the counter clockwise angle of the length side of the object from the positive x-axis in the xy-plane, and is reported in radians.
+
+Goal
+-------------------------------------------
+The generated DMP weights should enable the robot to move its end effector from its initial position to the goal position of the <b>${.goal_obj_name}</b> while avoiding collisions with any obstacles (movable objects in the scene that are not task relevant).
+You should tune the weights to bend the trajectory around obstacles while still reaching the goal efficiently.</pre></div>
+    </details>
+    <details class="prompt-box">
+      <summary>User prompt: subtask</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre>Here is the description of the current scene and task:
+<b>${.task}</b>.</pre></div>
+    </details>
+    <details class="prompt-box">
+      <summary>User prompt: feedback follow-up</summary>
+      <div class="prompt-body"><button class="prompt-copy" type="button">Copy</button><pre>Given your previously generated weights:
+<b>${.past_weights}</b>
+
+Here is suggested corrections after trial n: 
+<b>${.history}</b>
+
+Current objects being detected and their positions are: 
+<b>${.movable_objects}</b>
+
+Here is a high level action plan analysing the previous trial:
+<b>${.action_plan}</b>
+
+ONLY change the weights based on the analysis in the action plan, and keep other weights the same as before.
+
+With the trial history, your thought process should be as follows:
+1. Instead of coming up with entirely new weights, you always make incremental adjustments to the previous weights. 
+2. Identify any collisions that occurred during the last trial.
+3. Analyze the weights by dimension (reminder: x, y, z, qz, gripper action for each row).
+4. Look closely at the &quot;early&quot;, &quot;middle&quot;, and &quot;late&quot; labels from the action plan and change weights accordingly. (e.g. early weights corresponds to indices 0-3, middle weights corresponds to indices 4-6, late weights corresponds to indices 8-10 for each dimension)
+ For example, if you want to close the gripper later, you should suppress ealier weights to be negative as much as possible while increase the later weights.
+5. Refer to the given action plan, provide an updated set of weights.</pre></div>
+    </details>
+  </div>
+</section>
+</div>
+
+<section class="section">
+  <div class="container is-max-desktop">
+  </div>
+</section>
+
+<style>
+.video-scroll-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 12px 0 8px;
+}
+
+.experiment-row {
+  margin-top: 28px;
+}
+
+.experiment-subheader {
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.experiment-row-caption {
+  text-align: left;
+  margin: -4px 0 14px;
+  color: #4a4a4a;
+  font-size: 0.98rem;
+}
+
+.experiment-row-caption a {
+  color: rgb(255, 153, 0);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.experiment-row-caption a:hover {
+  color: rgb(255, 120, 0);
+  text-decoration: underline;
+}
+
+.inline-row-caption {
+  margin-top: 18px;
+}
+
+.inline-video-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.inline-video-card {
+  position: relative;
+}
+
+.inline-video {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.inline-video-tag {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.inline-video-speed {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1a1a1a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+.inline-video-caption {
+  text-align: center;
+  margin: 12px 0 0;
+  color: #4a4a4a;
+  font-size: 0.95rem;
+}
+
+.dropdown-video-section {
+  margin-top: 20px;
+}
+
+.dropdown-video-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dropdown-video-label {
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.dropdown-video-select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+.dropdown-media-split {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 18px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.dropdown-video,
+.dropdown-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.citation-section {
+  margin-top: 24px;
+}
+
+.citation-title {
+  margin: 0 0 12px;
+}
+
+.citation-block {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f5f4f1;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .dropdown-media-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video-scroll {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  width: 100%;
+  gap: 24px;
+  padding: 0 72px;
+  scroll-snap-type: x mandatory;
+  align-items: flex-start;
+}
+
+.video-card {
+  flex: 0 0 auto;
+  width: 42vw;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  scroll-snap-align: center;
+}
+
+.scroll-video {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  opacity: 0.35;
+  transform: scale(0.92);
+  transition: opacity 180ms ease, transform 180ms ease;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.video-card.is-active .scroll-video {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.video-caption {
+  margin: 0;
+  font-size: 0.95rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 200ms ease, transform 200ms ease;
+  color: #3a3a3a;
+  min-height: 1.4em;
+}
+
+.video-card.is-active .video-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-button {
+  background-color: #FF9900;
+  border: none;
+  color: white;
+  font-size: 2.2rem;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+  line-height: 1;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.scroll-icon {
+  display: block;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.scroll-button.left {
+  left: 0;
+}
+
+.scroll-button.right {
+  right: 0;
+}
+
+.video-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.video-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 153, 0, 0.35);
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.video-dot.is-active {
+  background: #FF9900;
+  transform: scale(1.25);
+}
+</style>
+
+<script>
+  const safePlay = (video) => {
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  };
+
+  const setupVideoRow = (row) => {
+    const videoScroll = row.querySelector('.video-scroll');
+    const videoCards = Array.from(row.querySelectorAll('.video-card'));
+    const videos = videoCards.map((card) => card.querySelector('.scroll-video'));
+    const dotsContainer = row.querySelector('.video-dots');
+    let activeIndex = -1;
+
+    const dots = videos.map(() => {
+      const dot = document.createElement('span');
+      dot.className = 'video-dot';
+      dotsContainer.appendChild(dot);
+      return dot;
+    });
+
+    const updateActiveVideo = () => {
+      const center = videoScroll.scrollLeft + videoScroll.clientWidth / 2;
+      let closest = null;
+      let closestDistance = Infinity;
+      let nextIndex = -1;
+
+      videoCards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(center - cardCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closest = card;
+          nextIndex = index;
+        }
+      });
+
+      videoCards.forEach((card) => card.classList.remove('is-active'));
+      if (closest) {
+        closest.classList.add('is-active');
+      }
+
+      dots.forEach((dot) => dot.classList.remove('is-active'));
+      if (nextIndex >= 0) {
+        dots[nextIndex].classList.add('is-active');
+      }
+
+      if (nextIndex !== activeIndex && nextIndex >= 0) {
+        const activeVideo = videos[nextIndex];
+        const isVisible = activeVideo.dataset.isVisible !== 'false';
+        if (isVisible) {
+          activeVideo.currentTime = 0;
+          safePlay(activeVideo);
+        }
+        activeIndex = nextIndex;
+      }
+    };
+
+    const scrollToIndex = (index) => {
+      const target = videoCards[index];
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    };
+
+    row.querySelector('.scroll-button.left').addEventListener('click', () => {
+      const nextIndex = Math.max(activeIndex - 1, 0);
+      scrollToIndex(nextIndex);
+    });
+
+    row.querySelector('.scroll-button.right').addEventListener('click', () => {
+      const nextIndex = Math.min(activeIndex + 1, videoCards.length - 1);
+      scrollToIndex(nextIndex);
+    });
+
+    let rafId = null;
+    videoScroll.addEventListener('scroll', () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      rafId = requestAnimationFrame(updateActiveVideo);
+    });
+
+    updateActiveVideo();
+  };
+
+  const setupVideoAutoplayObserver = () => {
+    const videos = Array.from(document.querySelectorAll('video'));
+    if (!videos.length || !('IntersectionObserver' in window)) {
+      return;
+    }
+
+    const isInViewport = (element) => {
+      const rect = element.getBoundingClientRect();
+      const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+      const viewWidth = window.innerWidth || document.documentElement.clientWidth;
+      return rect.bottom > 0 && rect.right > 0 && rect.top < viewHeight && rect.left < viewWidth;
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        video.dataset.isVisible = entry.isIntersecting ? 'true' : 'false';
+
+        if (!entry.isIntersecting) {
+          video.pause();
+          return;
+        }
+
+        safePlay(video);
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '400px 0px'
+    });
+
+    videos.forEach((video) => {
+      if (video.classList.contains('scroll-video') || video.classList.contains('inline-video') || video.id === 'dropdown-video') {
+        video.setAttribute('preload', 'auto');
+      } else {
+        video.setAttribute('preload', 'metadata');
+      }
+      video.muted = true;
+      video.defaultMuted = true;
+      video.volume = 0;
+      video.setAttribute('muted', '');
+      video.playsInline = true;
+      if (video.id !== 'dropdown-video') {
+        video.addEventListener('click', () => {
+          video.controls = true;
+        }, { once: true });
+      }
+      if (video.classList.contains('scroll-video') && isInViewport(video)) {
+        video.dataset.isVisible = 'true';
+        safePlay(video);
+      } else {
+        video.pause();
+      }
+      observer.observe(video);
+    });
+  };
+
+  document.querySelectorAll('[data-scroll-row]').forEach(setupVideoRow);
+
+  const dropdownSelect = document.getElementById('dropdown-video-select');
+  if (dropdownSelect) {
+    const dropdownVideo = document.getElementById('dropdown-video');
+    const dropdownVideoSource = document.getElementById('dropdown-video-source');
+    const dropdownImage = document.getElementById('dropdown-image');
+
+    const updateDropdownMedia = () => {
+      const selectedOption = dropdownSelect.selectedOptions[0];
+      const nextVideo = selectedOption?.getAttribute('data-video');
+      const nextImage = selectedOption?.getAttribute('data-image');
+
+      if (nextVideo && dropdownVideoSource) {
+        dropdownVideoSource.src = nextVideo;
+        if (dropdownVideo) {
+          dropdownVideo.load();
+          safePlay(dropdownVideo);
+        }
+      }
+
+      if (nextImage && dropdownImage) {
+        dropdownImage.src = nextImage;
+      }
+    };
+
+    dropdownSelect.addEventListener('change', updateDropdownMedia);
+    updateDropdownMedia();
+  }
+
+  setupVideoAutoplayObserver();
+</script>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      
+   <a class="icon-link" href="https://github.com/lmp-26/lmp-26.github.io/tree/code" class="external-link" disabled>
+     <i class="fab fa-github"></i>
+   </a>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/subpages.js"></script>
+<script src="./static/js/paths.js"></script>
+<script src="./static/js/baselines.js"></script>
+<script type="module" src="./static/js/dmp-playground.js"></script>
+</body>
+</html>
